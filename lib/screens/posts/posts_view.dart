@@ -24,23 +24,28 @@ class _PostsPageState extends State<PostsPage> {
     return ChangeNotifierProvider<PostViewModel>(
       create: (context) => viewModel,
       child: Consumer<PostViewModel>(
-        builder: (context, value, child) => Scaffold(
-          appBar: AppBar(
-            title: Center(child: Text("Posts")),
-          ),
-          body: ListView.builder(
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                margin: EdgeInsets.only(bottom: 5),
-                child: ListTile(
-                  title: Text("${value.posts[index].title}"),
-                  subtitle: Text("${value.posts[index].body}"),
-                ),
-              ),
+        builder: (context, value, child) => ListView.builder(
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: const EdgeInsets.only(bottom: 5),
+              child: ExpansionTile(
+                  leading: Text('ID: ${value.posts[index].id}'),
+                  title: Text(value.posts[index].title),
+                  children: [
+                    Text('UserID: ${value.posts[index].userId}'),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        value.posts[index].body,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ]),
             ),
-            itemCount: value.posts.length,
           ),
+          itemCount: value.posts.length,
         ),
       ),
     );

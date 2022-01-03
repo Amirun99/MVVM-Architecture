@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/posts/posts_view.dart';
+import 'package:flutter_jsonplaceholder/screens/dashboard/dashboard_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: PostsPage(),
+      home: Dashboard(),
     );
   }
 }

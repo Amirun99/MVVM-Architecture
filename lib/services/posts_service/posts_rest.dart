@@ -8,7 +8,7 @@ class PostsRest implements PostsService {
 
   @override
   Future<List<Post>> fetchStores() async {
-    final response = await rest.get("posts");
+    final response = await rest.get("posts/");
 
     return (response as List).map((e) => Post.fromJson(e)).toList();
   }
