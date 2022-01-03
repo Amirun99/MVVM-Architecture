@@ -27,9 +27,7 @@ class DashboardState extends State<Dashboard> {
               tabs: [
                 Tab(text: 'Posts'),
                 Tab(text: 'Comments'),
-                Tab(
-                  text: 'Photo',
-                )
+                Tab(text: 'Photo'),
               ],
             ),
           ),

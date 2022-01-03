@@ -30,12 +30,59 @@ class _PhotoPageState extends State<PhotoPage> {
                   child: Card(
                     margin: const EdgeInsets.only(bottom: 5),
                     child: ExpansionTile(
-                      leading: Image.network(value.photos[index].thumbnailUrl!),
+                      leading: Image.network(value.photos[index].thumbnailUrl!,
+                          frameBuilder: (BuildContext context, Widget child,
+                                  frame, bool wasSynchronouslyLoaded) =>
+                              wasSynchronouslyLoaded
+                                  ? child
+                                  : AnimatedOpacity(
+                                      child: child,
+                                      opacity: frame == null ? 0 : 1,
+                                      duration: const Duration(seconds: 2),
+                                      curve: Curves.easeOut,
+                                    ),
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null),
+                            );
+                          }),
                       title: Text(value.photos[index].title!),
                       children: [
                         Text('Album ID: ${value.photos[index].albumId}'),
                         const SizedBox(height: 10),
-                        Image.network(value.photos[index].url!)
+                        Image.network(
+                          value.photos[index].url!,
+                          frameBuilder: (BuildContext context, Widget child,
+                                  frame, bool wasSynchronouslyLoaded) =>
+                              wasSynchronouslyLoaded
+                                  ? child
+                                  : AnimatedOpacity(
+                                      child: child,
+                                      opacity: frame == null ? 0 : 1,
+                                      duration: const Duration(seconds: 2),
+                                      curve: Curves.easeOut,
+                                    ),
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
